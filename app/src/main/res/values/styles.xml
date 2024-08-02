@@ -2,11 +2,27 @@
 <resources>
     <!-- Base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <!-- Splash screen theme -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/slashscreen</item>
     </style>
+
+        <style name="statusPending">
+            <item name="android:textColor">#FFA500</item> <!-- Orange -->
+        </style>
+
+        <style name="statusAvailable">
+            <item name="android:textColor">#1BA953</item> <!-- Green -->
+        </style>
+
+        <style name="statusRejected">
+            <item name="android:textColor">#FF0000</item> <!-- Red -->
+        </style>
+
 </resources>

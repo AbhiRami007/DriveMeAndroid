@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="386dp"
+            android:layout_height="363dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="Login Image"
+            android:src="@drawable/loginimage" />
+
+        <TextView
+            android:id="@+id/backendError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/input_background"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:background="@drawable/input_background"
+            android:padding="10dp"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:backgroundTint="#4CAF50"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:textColor="#4CAF50"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</ScrollView>
