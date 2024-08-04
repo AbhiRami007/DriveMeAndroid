@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         signUpText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("MainActivity", "Item clicked");
-                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent intent = new Intent(MainActivity.this, ProfileSelectionActivity.class);
                 startActivity(intent);
             }
         });
