@@ -21,4 +21,14 @@
     <string name="create_account">Create Account</string>
     <string name="fa_hamburger">\uf0c9</string>
     <string name="bookings">Bookings</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="name">Name</string>
+    <string name="tag">Tag</string>
+    <string name="about">About</string>
+    <string name="model">Model</string>
+    <string name="shift">Shift</string>
+    <string name="wallet_balance">Wallet Balance</string>
+    <string name="recharge">Recharge</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
 </resources>

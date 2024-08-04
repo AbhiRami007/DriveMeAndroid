@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:padding="16dp">
 
     <TextView
@@ -18,39 +18,43 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/driversRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/header"
         app:layout_constraintBottom_toTopOf="@+id/bookNowButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/header"
+        app:layout_constraintVertical_bias="0.068" />
 
     <Button
         android:id="@+id/bookNowButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/book_now"
+        android:layout_marginBottom="72dp"
         android:backgroundTint="#4CAF50"
+        android:gravity="center"
+        android:text="@string/book_now"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/cancelButton"
         android:layout_width="373dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="592dp"
         android:gravity="center"
         android:text="@string/cancel"
         android:textColor="#4CAF50"
-        app:layout_constraintBottom_toBottomOf="@+id/bookNowButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/driversRecyclerView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/driversRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

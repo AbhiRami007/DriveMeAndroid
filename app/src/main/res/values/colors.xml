@@ -5,4 +5,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="statusPending">#FFD710</color>
+    <color name="statusAvailable">#1BA953</color>
+    <color name="statusRejected">#FF0000</color>
+    <color name="green">#1BA953</color>
+
 </resources>

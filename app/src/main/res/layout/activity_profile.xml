@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/back_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="16dp"
+        android:src="@drawable/back_button"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/profile"
+        android:layout_margin="5dp"
+        android:contentDescription="@string/profile_image" />
+
+    <!-- Name -->
+    <EditText
+        android:id="@+id/edit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+
+    <!-- Tag -->
+    <EditText
+        android:id="@+id/edit_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/tag"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+
+    <!-- About -->
+    <EditText
+        android:id="@+id/edit_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/about"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+
+    <!-- Vehicle Model -->
+    <EditText
+        android:id="@+id/edit_model"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/model"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+
+    <!-- Vehicle Shift -->
+    <EditText
+        android:id="@+id/edit_shift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/shift"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"/>
+
+    <!-- Wallet Balance -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/wallet_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wallet_balance"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/recharge_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recharge"
+            android:layout_margin="5dp"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
+
+    <!-- Edit Button -->
+    <Button
+        android:id="@+id/edit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit"
+        android:layout_margin="5dp"
+        android:background="@color/green"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save"
+        android:background="@color/green"
+        android:visibility="gone"
+        android:layout_margin="5dp"/>
+
+    <!-- Modal Dialog Placeholder -->
+    <!-- The modal dialog can be created programmatically in Java -->
+
+</LinearLayout>

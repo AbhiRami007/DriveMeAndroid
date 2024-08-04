@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".BookingSuccessActivity">
+
+    <ImageView
+        android:id="@+id/imageViewSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/booking_success" />
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewSuccess"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:text="You’ve successfully requested the booking, we will notify you when the driver accepts it."
+        android:textSize="16sp"
+        android:textColor="#888"
+        android:background="#F8faec"
+        android:gravity="center" />
+
+    <RelativeLayout
+        android:id="@+id/pickupContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewMessage"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageViewPickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/location_pin" />
+
+        <TextView
+            android:id="@+id/textViewPickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageViewPickup"
+            android:layout_marginLeft="8dp"
+            android:text="Pickup Location"
+            android:textColor="#979797"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewPickupLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/textViewPickup"
+            android:text="123 Main Street"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dropoffContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pickupContainer"
+        android:padding="16dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageViewDropoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/location_pin" />
+
+        <TextView
+            android:id="@+id/textViewDropoff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/imageViewDropoff"
+            android:layout_marginLeft="8dp"
+            android:text="Dropoff Location"
+            android:textColor="#979797"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewDropoffLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/textViewDropoff"
+            android:layout_marginLeft="8dp"
+            android:text="456 Elm Street"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewDrivers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dropoffContainer"
+        android:layout_marginBottom="10dp"/>
+
+    <RelativeLayout
+        android:id="@+id/statusContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recyclerViewDrivers"
+        android:padding="16dp"
+        android:background="#F8faec">
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textSize="16sp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/textViewBookingStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/textViewStatus"
+            android:text="Waiting for Confirmation"
+            android:textSize="14sp"
+            android:layout_marginLeft="8dp"
+            android:textColor="@android:color/black"
+            android:background="#FFD710"
+            android:padding="8dp"
+            android:gravity="center" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/buttonGoBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/statusContainer"
+        android:layout_marginTop="20dp"
+        android:text="Go Back"
+        android:backgroundTint="#4CAF50"
+        android:textColor="@android:color/white" />
+
+
+
+</RelativeLayout>

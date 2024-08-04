@@ -18,11 +18,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.drivemeandroid.adapters.DriverAdapter;
+import com.example.drivemeandroid.models.Driver;
 import com.google.android.material.navigation.NavigationView;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -68,20 +74,28 @@ public class HomeActivity extends AppCompatActivity {
 
         navigationView.setNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.nav_home) {
-                // Handle profile navigation
-            }
-            else if (itemId == R.id.nav_bookings) {
+            if (itemId == R.id.nav_bookings) {
                 Intent intent = new Intent(this, BookingsActivity.class);
                 startActivity(intent);
                 return true;
             }
             else if (itemId == R.id.nav_profile) {
-                // Handle profile navigation
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+                return true;
             } else if (itemId == R.id.nav_settings) {
-                // Handle settings navigation
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            }else if (itemId == R.id.nav_payments) {
+                Intent intent = new Intent(this, PaymentsActivity.class);
+                startActivity(intent);
+                return true;
+
             }else if (itemId == R.id.nav_logout) {
-                // Handle logout
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
             }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -134,22 +148,27 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView recyclerView = dialog.findViewById(R.id.driversRecyclerView);
         Button bookNowButton = dialog.findViewById(R.id.bookNowButton);
 
-        // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        // You would need to set an adapter here with your data
-        // recyclerView.setAdapter(new DriversAdapter(yourData));
+        DriverAdapter adapter = new DriverAdapter(getDummyDrivers());
+        recyclerView.setAdapter(adapter);
 
-        // Set up the cancel button
         cancelButton.setOnClickListener(v -> dialog.dismiss());
-
-        // Set up the book now button
         bookNowButton.setOnClickListener(v -> {
-            // Handle book now action
             dialog.dismiss();
         });
 
         dialog.show();
     }
+
+
+    private List<Driver> getDummyDrivers() {
+        List<Driver> drivers = new ArrayList<>();
+        drivers.add(new Driver("John Doe", "20 USD", "https://example.com/driver1.jpg"));
+        drivers.add(new Driver("Jane Smith", "25 USD", "https://example.com/driver2.jpg"));
+        drivers.add(new Driver("Michael Brown", "30 USD", "https://example.com/driver3.jpg"));
+        return drivers;
+    }
+
 
     @Override
     protected void onResume() {

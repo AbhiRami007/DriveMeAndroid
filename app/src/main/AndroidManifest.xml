@@ -29,7 +29,9 @@
             android:name=".HomeActivity">
         </activity>
         <activity android:name=".BookingsActivity" />
-
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".PaymentsActivity" />
+        <activity android:name=".SettingsActivity" />
     </application>
 
 </manifest>
