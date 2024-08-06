@@ -77,6 +77,22 @@
         app:layout_constraintWidth_default="wrap"
         app:layout_constraintWidth_max="300dp" />
 
+    <EditText
+        android:id="@+id/inputRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/input_background"
+        android:hint="Rate per hour"
+        android:inputType="text"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputConfirmPassword"
+        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintWidth_max="300dp"
+        android:visibility="gone" />
+
     <Button
         android:id="@+id/signupButton"
         android:layout_width="0dp"

@@ -40,8 +40,12 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.recyclerview)
     implementation(libs.picasso)
+    implementation(libs.databinding.adapters)
+    implementation(libs.room.common)
+    implementation(libs.room.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.osmdroid.android)
+    annotationProcessor(libs.room.compiler)
 }

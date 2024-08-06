@@ -3,7 +3,10 @@ package com.example.drivemeandroid;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +15,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.drivemeandroid.adapters.BookingAdapter;
+import com.example.drivemeandroid.models.Booking;
+import com.example.drivemeandroid.models.RideSchedule;
+import com.example.drivemeandroid.models.UserDetails;
+import com.example.drivemeandroid.models.UserVehicle;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ProfileActivity extends AppCompatActivity {
 
     private EditText editName, editTag, editAbout, editModel, editShift;
@@ -19,15 +31,15 @@ public class ProfileActivity extends AppCompatActivity {
     private Button editButton, saveButton, rechargeButton;
     private boolean isEditing = false;
     private ImageView backButton;
+    private AppDatabase database;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        database = AppDatabase.getInstance(this);
         // Initialize Views
         editName = findViewById(R.id.edit_name);
         editTag = findViewById(R.id.edit_tag);
-        editAbout = findViewById(R.id.edit_about);
         editModel = findViewById(R.id.edit_model);
         editShift = findViewById(R.id.edit_shift);
         walletBalance = findViewById(R.id.wallet_balance);
@@ -43,8 +55,7 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Dummy Data
-        setDummyData();
+        setProfileData();
 
         // Edit Button Click Listener
         editButton.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +82,19 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void setDummyData() {
-        // Set dummy data
-        editName.setText("John Doe");
-        editTag.setText("Driver");
-        editAbout.setText("Experienced driver with 5 years of experience.");
-        editModel.setText("Toyota Corolla");
-        editShift.setText("Morning");
-        walletBalance.setText("1000");
+    private void setProfileData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1);
+
+        new Thread(() -> {
+            UserDetails userDetails = database.userDao().getUser(userId);
+            UserVehicle userVehicle = database.userVehicleDao().getVehicleByUserId(userId);
+            editName.setText(userDetails.getName());
+            editTag.setText(userDetails.getUserRole());
+            editModel.setText(userVehicle.getModel());
+            editShift.setText(userVehicle.getShift());
+            walletBalance.setText(userDetails.getWalletBalance());
+        }).start();
     }
 
     private void toggleEditMode() {

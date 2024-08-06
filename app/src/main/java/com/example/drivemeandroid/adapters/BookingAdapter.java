@@ -38,7 +38,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         Booking booking = bookingList.get(position);
         holder.driverNameTextView.setText(booking.getDriverName());
 
-        Picasso.get().load(booking.getProfileImageUrl()).into(holder.driverImageView);
+        Picasso.get().load(R.drawable.profile).into(holder.driverImageView);
 
         switch (booking.getBookingStatus()) {
             case 0:

@@ -2,6 +2,7 @@ package com.example.drivemeandroid;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -21,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.drivemeandroid.adapters.DriverAdapter;
 import com.example.drivemeandroid.models.Driver;
+import com.example.drivemeandroid.models.RideSchedule;
+import com.example.drivemeandroid.models.UserDetails;
+import com.example.drivemeandroid.models.UserVehicle;
 import com.google.android.material.navigation.NavigationView;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
@@ -28,6 +34,7 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -44,14 +51,21 @@ public class HomeActivity extends AppCompatActivity {
     private Spinner vehicleModelSpinner;
     private Spinner vehicleShiftSpinner;
     private EditText instructionInput;
+    private EditText pickUp, dropOff;
+
+    private AppDatabase database;
+    private int selectedDriverId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        database = AppDatabase.getInstance(this);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
+        pickUp = findViewById(R.id.pickupText);
+        dropOff = findViewById(R.id.dropoffText);
         map = findViewById(R.id.map);
         map.setMultiTouchControls(true);
 
@@ -127,7 +141,11 @@ public class HomeActivity extends AppCompatActivity {
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
 
-        NextButton.setOnClickListener(v -> showCustomDialog());
+        NextButton.setOnClickListener(v ->
+        {
+            showCustomDialog();
+            dialog.dismiss();
+        });
 
         selectDayButton.setOnClickListener(v -> {
             // Show DatePickerDialog
@@ -149,23 +167,60 @@ public class HomeActivity extends AppCompatActivity {
         Button bookNowButton = dialog.findViewById(R.id.bookNowButton);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DriverAdapter adapter = new DriverAdapter(getDummyDrivers());
+        DriverAdapter adapter = new DriverAdapter(getDummyDrivers(), driverId -> selectedDriverId = driverId);
         recyclerView.setAdapter(adapter);
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
         bookNowButton.setOnClickListener(v -> {
-            dialog.dismiss();
+            saveBookingDetails();
         });
 
         dialog.show();
     }
 
+    private void saveBookingDetails() {
+        // Retrieve data from UI
+        String pickUpLocation = pickUp.getText().toString();
+        String dropOffLocation = dropOff.getText().toString();
+        String vehicleModel = vehicleModelSpinner.getSelectedItem().toString();
+        String vehicleShift = vehicleShiftSpinner.getSelectedItem().toString();
+        String instructions = instructionInput.getText().toString();
+        String date = new Date().toString();
+        String time = new Date().toString();
+        int driverId = selectedDriverId;
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", -1);
+
+        RideSchedule rideSchedule = new RideSchedule();
+        rideSchedule.setDate(date);
+        rideSchedule.setTime(time);
+        rideSchedule.setDriverId(driverId);
+        rideSchedule.setDropOffLocation(dropOffLocation);
+        rideSchedule.setPickUpLocation(pickUpLocation);
+        rideSchedule.setBookingStatus(0);
+        rideSchedule.setInstructions(instructions);
+        rideSchedule.setPassengerId(userId);
+
+        UserVehicle userVehicles = new UserVehicle();
+        userVehicles.setModel(vehicleModel);
+        userVehicles.setShift(vehicleShift);
+        userVehicles.setPassengerId(userId);
+        Intent intent = new Intent(HomeActivity.this, BookingSuccessActivity.class);
+        intent.putExtra("pickUp", pickUpLocation);
+        intent.putExtra("dropOff", dropOffLocation);
+        startActivity(intent);
+        new Thread(() -> {
+            database.rideScheduleDao().insertRideSchedule(rideSchedule);
+            database.userVehicleDao().insert(userVehicles);
+        }).start();
+
+    }
 
     private List<Driver> getDummyDrivers() {
         List<Driver> drivers = new ArrayList<>();
-        drivers.add(new Driver("John Doe", "20 USD", "https://example.com/driver1.jpg"));
-        drivers.add(new Driver("Jane Smith", "25 USD", "https://example.com/driver2.jpg"));
-        drivers.add(new Driver("Michael Brown", "30 USD", "https://example.com/driver3.jpg"));
+        drivers.add(new Driver(1,"John Doe", 20, "https://example.com/driver1.jpg"));
+        drivers.add(new Driver(2, "Jane Smith", 25, "https://example.com/driver2.jpg"));
+        drivers.add(new Driver(3, "Michael Brown", 30, "https://example.com/driver3.jpg"));
         return drivers;
     }
 

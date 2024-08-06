@@ -1,12 +1,12 @@
 <resources>
     <string-array name="vehicle_models">
-        <item>Model A</item>
-        <item>Model B</item>
-        <item>Model C</item>
+        <item>SUV</item>
+        <item>Hatch Back</item>
+        <item>Sedan</item>
     </string-array>
     <string-array name="vehicle_shifts">
-        <item>Shift 1</item>
-        <item>Shift 2</item>
-        <item>Shift 3</item>
+        <item>Manual</item>
+        <item>Automatic</item>
+        <item>Semi</item>
     </string-array>
 </resources>

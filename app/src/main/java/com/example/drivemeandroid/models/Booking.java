@@ -5,9 +5,8 @@ public class Booking {
     private String profileImageUrl;
     private int bookingStatus;
 
-    public Booking(String driverName, String profileImageUrl, double v, int bookingStatus) {
+    public Booking(String driverName,  int bookingStatus) {
         this.driverName = driverName;
-        this.profileImageUrl = profileImageUrl;
         this.bookingStatus = bookingStatus;
     }
 
