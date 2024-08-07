@@ -19,7 +19,7 @@ public class UserDetails {
     private String name;
     private String userRole;
     private boolean disabled;
-    private int walletBalance = 0;
+    private int walletBalance;
 
     @ColumnInfo(name = "charge_per_hour")
     private int chargePerHour; // Use double for numerical values

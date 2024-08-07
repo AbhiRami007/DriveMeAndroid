@@ -9,20 +9,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.drivemeandroid.AppDatabase;
 import com.example.drivemeandroid.R;
 import com.example.drivemeandroid.models.Request;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class RequestAdapter extends ArrayAdapter<Request> {
 
     private final Context context;
     private final ArrayList<Request> requests;
+    private final AppDatabase requestDatabase;
 
-    public RequestAdapter(Context context, ArrayList<Request> requests) {
+    public RequestAdapter(Context context, ArrayList<Request> requests, AppDatabase requestDatabase) {
         super(context, R.layout.item_request, requests);
         this.context = context;
         this.requests = requests;
+        this.requestDatabase = requestDatabase;
     }
 
     @Override
@@ -42,6 +46,8 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         TextView textViewPrice = convertView.findViewById(R.id.textViewPrice);
         Button buttonAccept = convertView.findViewById(R.id.buttonAccept);
         Button buttonReject = convertView.findViewById(R.id.buttonReject);
+        TextView accepted = convertView.findViewById(R.id.accepted);
+        TextView rejected = convertView.findViewById(R.id.rejected);
 
         // Set data
         textViewName.setText(request.getName());
@@ -50,15 +56,39 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         textViewDropOffLocation.setText(request.getDropOffLocation());
         textViewPrice.setText(request.getPrice());
 
-        // Handle button clicks
+        int status = request.getBookingStatus();
+        if (status == 1 || status == 2) {
+            buttonAccept.setVisibility(View.GONE);
+            buttonReject.setVisibility(View.GONE);
+            if (status == 1) {
+                accepted.setVisibility(View.VISIBLE);
+            } else {
+                rejected.setVisibility(View.VISIBLE);
+            }
+        }
+
         buttonAccept.setOnClickListener(v -> {
-            // Handle accept action
+            updateRequestStatus(request.getRideId(), 1, position);
         });
 
         buttonReject.setOnClickListener(v -> {
-            // Handle reject action
+            updateRequestStatus(request.getRideId(), 2, position);
         });
 
         return convertView;
+    }
+
+    private void updateRequestStatus(int requestId, int status, int position) {
+        new Thread(() -> {
+            // Update the request status in the database
+            requestDatabase.rideScheduleDao().updateRequestStatus(requestId, status);
+
+            // Update the local list and notify the adapter on the main thread
+            ((android.app.Activity) context).runOnUiThread(() -> {
+                // Refresh the requests list
+                requests.get(position).setBookingStatus(status);
+                notifyDataSetChanged();
+            });
+        }).start();
     }
 }

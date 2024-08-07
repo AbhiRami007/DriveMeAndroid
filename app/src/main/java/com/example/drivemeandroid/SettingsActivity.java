@@ -1,6 +1,7 @@
 package com.example.drivemeandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -21,11 +22,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         callButton = findViewById(R.id.callButton);
         backButton = findViewById(R.id.back_button);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String userRole = sharedPreferences.getString("userRole", "");
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
+                Intent intent;
+                if (userRole.equals("Driver")) {
+                    intent = new Intent(SettingsActivity.this, RequestsActivity.class);
+                } else {
+                    intent = new Intent(SettingsActivity.this, HomeActivity.class);
+                }
                 startActivity(intent);
             }
         });

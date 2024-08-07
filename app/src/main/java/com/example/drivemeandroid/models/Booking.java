@@ -4,10 +4,12 @@ public class Booking {
     private String driverName;
     private String profileImageUrl;
     private int bookingStatus;
+    private int id;
 
-    public Booking(String driverName,  int bookingStatus) {
+    public Booking(String driverName,  int bookingStatus, int id) {
         this.driverName = driverName;
         this.bookingStatus = bookingStatus;
+        this.id = id;
     }
 
     public String getDriverName() {
@@ -20,6 +22,9 @@ public class Booking {
 
     public int getBookingStatus() {
         return bookingStatus;
+    }
+    public int getId() {
+        return id;
     }
 }
 

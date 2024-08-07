@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+//        DatabaseDeleter.deleteRoomDatabases(this);
+        AppDatabase.getInstance(getApplicationContext());
         loginButton = findViewById(R.id.loginText);
         signUpText = findViewById(R.id.signupText);
         loginButton.setOnClickListener(new View.OnClickListener() {

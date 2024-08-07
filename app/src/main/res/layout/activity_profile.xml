@@ -47,25 +47,15 @@
         android:textSize="20sp"
         android:layout_margin="5dp"/>
 
-    <!-- Vehicle Model -->
     <EditText
-        android:id="@+id/edit_model"
+        android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/model"
+        android:hint="@string/email_address"
         android:padding="16dp"
         android:textSize="20sp"
         android:layout_margin="5dp"/>
 
-    <!-- Vehicle Shift -->
-    <EditText
-        android:id="@+id/edit_shift"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/shift"
-        android:padding="16dp"
-        android:textSize="20sp"
-        android:layout_margin="5dp"/>
 
     <!-- Wallet Balance -->
     <LinearLayout

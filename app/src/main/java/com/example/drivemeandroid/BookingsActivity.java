@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,8 +19,12 @@ import com.example.drivemeandroid.models.Booking;
 import com.example.drivemeandroid.models.RideSchedule;
 import com.example.drivemeandroid.models.UserDetails;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class BookingsActivity extends AppCompatActivity {
 
@@ -59,19 +64,29 @@ public class BookingsActivity extends AppCompatActivity {
 
         new Thread(() -> {
             List<RideSchedule> schedule = database.rideScheduleDao().getRideScheduleById(userId);
+            Log.d("BookingsActivity", "Number of ride schedules: " + schedule.size());
+
             List<Booking> bookingsList = new ArrayList<>();
 
             for (RideSchedule rideSchedule : schedule) {
                 UserDetails user = database.userDao().getUser(rideSchedule.getDriverId());
-                String driverName = user.getName();
-                int bookingStatus = rideSchedule.getBookingStatus();
-
-                Booking booking = new Booking(driverName, bookingStatus);
-                bookingsList.add(booking);
+                if (user != null) {
+                    String driverName = user.getName();
+                    int bookingStatus = rideSchedule.getBookingStatus();
+                    int id = rideSchedule.getRideId();
+                    Booking booking = new Booking(driverName, bookingStatus, id);
+                    bookingsList.add(booking);
+                } else {
+                    Log.d("BookingsActivity", "User not found for driver ID: " + rideSchedule.getDriverId());
+                }
             }
+
+            Log.d("BookingsActivity", "Number of bookings: " + bookingsList.size());
 
             // Update the UI on the main thread
             new Handler(Looper.getMainLooper()).post(() -> {
+                bookingsList.sort((b1, b2) -> Integer.compare(b2.getId(), b1.getId()));
+
                 if (bookingsList.isEmpty()) {
                     noBookingsMessage.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -84,4 +99,5 @@ public class BookingsActivity extends AppCompatActivity {
             });
         }).start();
     }
+
 }

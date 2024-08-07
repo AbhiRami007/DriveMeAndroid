@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.drivemeandroid.adapters.DriverAdapter;
+import com.example.drivemeandroid.models.Booking;
 import com.example.drivemeandroid.models.Driver;
 import com.example.drivemeandroid.models.RideSchedule;
 import com.example.drivemeandroid.models.UserDetails;
@@ -167,7 +168,7 @@ public class HomeActivity extends AppCompatActivity {
         Button bookNowButton = dialog.findViewById(R.id.bookNowButton);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        DriverAdapter adapter = new DriverAdapter(getDummyDrivers(), driverId -> selectedDriverId = driverId);
+        DriverAdapter adapter = new DriverAdapter(getDrivers(), driverId -> selectedDriverId = driverId);
         recyclerView.setAdapter(adapter);
 
         cancelButton.setOnClickListener(v -> dialog.dismiss());
@@ -216,11 +217,14 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private List<Driver> getDummyDrivers() {
+    private List<Driver> getDrivers() {
         List<Driver> drivers = new ArrayList<>();
-        drivers.add(new Driver(1,"John Doe", 20, "https://example.com/driver1.jpg"));
-        drivers.add(new Driver(2, "Jane Smith", 25, "https://example.com/driver2.jpg"));
-        drivers.add(new Driver(3, "Michael Brown", 30, "https://example.com/driver3.jpg"));
+        new Thread(() -> {
+            List<UserDetails> userDetails = database.userDao().getDriversByRole("Driver");
+            for (UserDetails user : userDetails) {
+                drivers.add(new Driver(user.getUserId(),user.getName(), user.getChargePerHour(), "https://example.com/driver1.jpg"));
+            }
+        }).start();
         return drivers;
     }
 

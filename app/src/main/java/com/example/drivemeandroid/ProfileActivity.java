@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private EditText editName, editTag, editAbout, editModel, editShift;
+    private EditText editName, editTag, editEmail;
     private TextView walletBalance;
     private Button editButton, saveButton, rechargeButton;
     private boolean isEditing = false;
@@ -40,18 +40,25 @@ public class ProfileActivity extends AppCompatActivity {
         // Initialize Views
         editName = findViewById(R.id.edit_name);
         editTag = findViewById(R.id.edit_tag);
-        editModel = findViewById(R.id.edit_model);
-        editShift = findViewById(R.id.edit_shift);
+        editEmail = findViewById(R.id.edit_email);
         walletBalance = findViewById(R.id.wallet_balance);
         editButton = findViewById(R.id.edit_button);
         saveButton = findViewById(R.id.save_button);
         rechargeButton = findViewById(R.id.recharge_button);
         backButton = findViewById(R.id.back_button);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        String userRole = sharedPreferences.getString("userRole", "");
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                Intent intent;
+                if (userRole.equals("Driver")) {
+                    intent = new Intent(ProfileActivity.this, RequestsActivity.class);
+                } else {
+                    intent = new Intent(ProfileActivity.this, HomeActivity.class);
+                }
                 startActivity(intent);
             }
         });
@@ -85,25 +92,36 @@ public class ProfileActivity extends AppCompatActivity {
     private void setProfileData() {
         SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId", -1);
+        String userRole = sharedPreferences.getString("userRole", "");
 
+        // Run the database query in a background thread
         new Thread(() -> {
             UserDetails userDetails = database.userDao().getUser(userId);
-            UserVehicle userVehicle = database.userVehicleDao().getVehicleByUserId(userId);
-            editName.setText(userDetails.getName());
-            editTag.setText(userDetails.getUserRole());
-            editModel.setText(userVehicle.getModel());
-            editShift.setText(userVehicle.getShift());
-            walletBalance.setText(userDetails.getWalletBalance());
+
+            // Switch to the main thread to update UI elements
+            runOnUiThread(() -> {
+                // Update UI elements
+                editName.setText(userDetails.getName());
+                editTag.setText(userDetails.getUserRole());
+                editEmail.setText(userDetails.getEmail());
+
+                if (userRole.equals("Driver")) {
+                    walletBalance.setVisibility(View.GONE);
+                    rechargeButton.setVisibility(View.GONE);
+                } else {
+                    walletBalance.setVisibility(View.VISIBLE);
+                    walletBalance.setText(String.valueOf(userDetails.getWalletBalance()));
+                    rechargeButton.setVisibility(View.VISIBLE);
+                }
+            });
         }).start();
     }
+
 
     private void toggleEditMode() {
         isEditing = !isEditing;
         editName.setEnabled(isEditing);
         editTag.setEnabled(isEditing);
-        editAbout.setEnabled(isEditing);
-        editModel.setEnabled(isEditing);
-        editShift.setEnabled(isEditing);
         editButton.setVisibility(isEditing ? View.GONE : View.VISIBLE);
         saveButton.setVisibility(isEditing ? View.VISIBLE : View.GONE);
     }
